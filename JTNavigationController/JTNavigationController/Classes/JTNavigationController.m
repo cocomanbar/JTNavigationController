@@ -62,7 +62,7 @@
 
 #pragma mark - JTWrapViewController
 
-static NSValue *jt_tabBarRectValue;
+//static NSValue *jt_tabBarRectValue;
 
 @implementation JTWrapViewController
 
@@ -71,6 +71,7 @@ static NSValue *jt_tabBarRectValue;
     JTWrapNavigationController *wrapNavController = [[JTWrapNavigationController alloc] init];
     wrapNavController.viewControllers = @[viewController];
     
+    wrapNavController.view.frame = CGRectMake(0, 0, wrapNavController.view.frame.size.width, wrapNavController.view.frame.size.height);
     JTWrapViewController *wrapViewController = [[JTWrapViewController alloc] init];
     [wrapViewController.view addSubview:wrapNavController.view];
     [wrapViewController addChildViewController:wrapNavController];
@@ -78,30 +79,30 @@ static NSValue *jt_tabBarRectValue;
     return wrapViewController;
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    if (self.tabBarController && !jt_tabBarRectValue) {
-        jt_tabBarRectValue = [NSValue valueWithCGRect:self.tabBarController.tabBar.frame];
-    }
-    
-}
+//- (void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//
+//    if (self.tabBarController && !jt_tabBarRectValue) {
+//        jt_tabBarRectValue = [NSValue valueWithCGRect:self.tabBarController.tabBar.frame];
+//    }
+//
+//}
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (self.tabBarController && [self rootViewController].hidesBottomBarWhenPushed) {
-        self.tabBarController.tabBar.frame = CGRectZero;
-    }
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//
+//    if (self.tabBarController && [self rootViewController].hidesBottomBarWhenPushed) {
+//        self.tabBarController.tabBar.frame = CGRectZero;
+//    }
+//}
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.translucent = YES;
-    if (self.tabBarController && !self.tabBarController.tabBar.hidden && jt_tabBarRectValue) {
-        self.tabBarController.tabBar.frame = jt_tabBarRectValue.CGRectValue;
-    }
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    self.tabBarController.tabBar.translucent = YES;
+//    if (self.tabBarController && !self.tabBarController.tabBar.hidden && jt_tabBarRectValue) {
+//        self.tabBarController.tabBar.frame = jt_tabBarRectValue.CGRectValue;
+//    }
+//}
 
 - (BOOL)jt_fullScreenPopGestureEnabled {
     return [self rootViewController].jt_fullScreenPopGestureEnabled;
