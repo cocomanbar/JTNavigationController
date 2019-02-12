@@ -142,6 +142,9 @@ static NSValue *jt_tabBarRectValue;
 
 @property (nonatomic, strong) id popGestureDelegate;
 
+/* 0.0~1.0 default 1.0->full*/
+@property (nonatomic, assign) CGFloat fullScreenPopGestureScale;
+
 @end
 
 @implementation JTNavigationController
@@ -165,6 +168,7 @@ static NSValue *jt_tabBarRectValue;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.fullScreenPopGestureScale = 0.5;
     [self setNavigationBarHidden:YES];
     self.delegate = self;
     
@@ -172,7 +176,7 @@ static NSValue *jt_tabBarRectValue;
     SEL action = NSSelectorFromString(@"handleNavigationTransition:");
     self.popPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self.popGestureDelegate action:action];
     self.popPanGesture.maximumNumberOfTouches = 1;
-    
+    self.popPanGesture.delegate = self;
 }
 
 
@@ -207,6 +211,15 @@ static NSValue *jt_tabBarRectValue;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return [gestureRecognizer isKindOfClass:UIScreenEdgePanGestureRecognizer.class];
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    CGFloat gestX = [gestureRecognizer locationInView:self.view].x;
+    CGFloat margin = self.fullScreenPopGestureScale*[UIScreen mainScreen].bounds.size.width;
+    if (gestX <= margin) {
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - Getter

@@ -24,6 +24,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(didTapNextButton)];
     
 //    self.jt_fullScreenPopGestureEnabled = NO; //关闭当前控制器的全屏返回手势
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
